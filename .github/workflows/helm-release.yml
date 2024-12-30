@@ -30,21 +30,15 @@ jobs:
 
       - name: Package Helm Charts
         run: |
-          mkdir -p .cr-release-packages
-          helm package charts/* --destination .cr-release-packages
+          helm package charts/* --destination releases/
 
       - name: Create index.yaml
         run: |
-          helm repo index --url https://aja2k.github.io/demo/releases/ .cr-release-packages
-
-      - name: Move Files
-        run: |
-          mv .cr-release-packages/* releases/
-          mv .cr-release-packages/index.yaml releases/
-          rmdir .cr-release-packages
+          cd releases
+          helm repo index --url https://aja2k.github.io/demo/releases/ .
 
       - name: Push Changes
         run: |
-          git add .
+          git add releases/
           git commit -m "Update Helm charts"
           git push
