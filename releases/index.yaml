@@ -3,7 +3,7 @@ entries:
   dev-ingress-nginx:
   - apiVersion: v2
     appVersion: 1.11.2
-    created: "2024-12-30T08:17:23.075870144Z"
+    created: "2024-12-30T08:28:25.891057243Z"
     dependencies:
     - condition: ingress-nginx.enabled
       name: ingress-nginx
@@ -12,10 +12,10 @@ entries:
       - ingress
       version: 4.11.2
     description: A Helm chart for ingress-nginx
-    digest: 94c80f1d7f3fa587b5a87de81490e1f8210f65401dbc4b8e65ca134cbde583c6
+    digest: 7d4e18e9e51624856e19748cfb896893dae6d8dd49b870d90f6dd9d69879c58f
     name: dev-ingress-nginx
     type: application
     urls:
     - https://aja2k.github.io/demo/releases/dev-ingress-nginx-4.11.2.tgz
     version: 4.11.2
-generated: "2024-12-30T08:17:23.071483289Z"
+generated: "2024-12-30T08:28:25.88683176Z"
