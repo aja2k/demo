@@ -43,9 +43,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git remote set-url origin "https://${{ github.actor }}:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git"
+          git config --global user.name "aja2k"
+          git config --global user.email "aja2k@users.noreply.github.com"
+          git remote set-url origin "https://aja2k:${{ secrets.PAT_TOKEN }}@github.com/aja2k/demo.git"
           git add releases/
           git commit -m "Update Helm charts"
           git push
