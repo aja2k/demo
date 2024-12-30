@@ -1,0 +1,18 @@
+apiVersion: v1
+entries:
+  argocd:
+  - apiVersion: v2
+    appVersion: 7.6.9
+    created: "2024-12-30T11:33:22.253198064+09:00"
+    dependencies:
+    - name: argo-cd
+      repository: https://argoproj.github.io/argo-helm
+      version: 7.6.9
+    description: A Helm chart for argoCD
+    digest: 41d7830da63bf1521bfcc1b5090b1e1421c01ddc46ab6e1913398a951af0878b
+    name: argocd
+    type: application
+    urls:
+    - https://aja2k.github.io/demo/charts/argocd-1.0.1.tgz
+    version: 1.0.1
+generated: "2024-12-30T11:33:22.173669034+09:00"
