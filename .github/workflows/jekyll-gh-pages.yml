@@ -6,16 +6,19 @@ on:
     paths:
       - '_config.yml'
       - 'README.md'
+  # 수동 실행 옵션
   workflow_dispatch:
 
+# GitHub Pages에 대한 권한 설정
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# 캐시 사용을 위한 환경변수 설정
-env:
-  JEKYLL_ENV: production
+# 동시 실행 방지 설정
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -25,42 +28,21 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1  # 최신 커밋만 가져오기
-
-      # Ruby 환경 설정 및 캐싱
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1'
-          bundler-cache: true
-
-      # Jekyll 캐시 설정
-      - uses: actions/cache@v3
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        
-      # 빠른 빌드를 위한 설정
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
-          future: false
-          unpublished: false
-          verbose: false  # 로그 출력 최소화
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./_site  # 빌드된 사이트 경로 지정
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
