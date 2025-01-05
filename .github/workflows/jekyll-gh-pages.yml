@@ -13,10 +13,6 @@ permissions:
   pages: write
   id-token: write
 
-# 캐시 사용을 위한 환경변수 설정
-env:
-  JEKYLL_ENV: production
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,39 +23,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1  # 최신 커밋만 가져오기
+          fetch-depth: 1
 
-      # Ruby 환경 설정 및 캐싱
+      # Gemfile 생성
+      - name: Create Gemfile
+        run: |
+          echo "source 'https://rubygems.org'" > Gemfile
+          echo "gem 'jekyll-remote-theme'" >> Gemfile
+          echo "gem 'github-pages', group: :jekyll_plugins" >> Gemfile
+
+      # Ruby 및 Bundler 설정
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
           bundler-cache: true
-
-      # Jekyll 캐시 설정
-      - uses: actions/cache@v3
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
+          cache-version: 0 # 캐시 버전 지정
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        
-      # 빠른 빌드를 위한 설정
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
-          future: false
-          unpublished: false
-          verbose: false  # 로그 출력 최소화
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./_site  # 빌드된 사이트 경로 지정
 
       - name: Deploy to GitHub Pages
         id: deployment
